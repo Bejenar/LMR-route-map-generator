@@ -19,31 +19,39 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
+
+    <link href="https://unpkg.com/treeflex/dist/css/treeflex.css" rel="stylesheet">
     <title>Route Directory</title>
 </head>
 
 <body>
 
-<div th:each="day: ${days}" class="accordion">
-    <div class="card">
-        <div class="card-header" th:id="'day-'+${day.getName()}">
-            <h2 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                        th:data-target="'#data-day-' + ${day.getName()}"
-                        aria-expanded="false"
-                        th:aria-controls="'data-day-' + ${day.getName()}" th:text="${day.getName()}"></button>
-            </h2>
-        </div>
-        <div th:id="'data-day-' + ${day.getName()}" class="collapse"
-             th:aria-labelledby="'day-'+${day.getName()}">
-            <div class="card-body">
-                <div class="accordion">
-                    <div th:replace="labels.html:: labels(dayLabels=${day.getLabels()})"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="tf-tree example">
+    <ul>
+        <li>
+            <span class="tf-nc" th:text="${start.getName()}"></span>
+            <ul th:replace="node.html :: tree(start=${start})"></ul>
+        </li>
+    </ul>
 </div>
+
+<script>
+    document.addEventListener("click", function(event){
+        let e = event.target;
+        let elements = e.parentNode.childNodes;
+
+        for(let i = 0; i < elements.length; i++){
+            if(elements[i].nodeName === "UL") {
+                if ( elements[i].style.display === 'none')
+                    elements[i].style.display = '';
+                else
+                    elements[i].style.display = 'none';
+            }
+        }
+    });
+
+
+</script>
 
 </body>
 </html>

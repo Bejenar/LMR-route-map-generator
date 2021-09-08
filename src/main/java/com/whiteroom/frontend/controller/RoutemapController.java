@@ -18,4 +18,10 @@ public class RoutemapController {
         model.addAttribute("days", routeBuilderService.getDays());
         return "route-map";
     }
+
+    @GetMapping("/")
+    public String ooo(Model model) {
+        model.addAttribute("start",routeBuilderService.traceRoute().stream().findFirst().get());
+        return "index";
+    }
 }

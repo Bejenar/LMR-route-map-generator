@@ -7,7 +7,9 @@ import lombok.Data;
 @Builder
 public class Condition {
 
-    String condition;
+    String ifCondition;
+    String ifBody;
 
-    String expression;
+    String elseCondition;
+    String elseBody;
 }

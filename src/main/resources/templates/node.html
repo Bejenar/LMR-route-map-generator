@@ -1,0 +1,6 @@
+<ul th:fragment="tree(start)" style="display: none">
+    <li th:each="label: ${start.getNext()}">
+        <span class="tf-nc" th:text="${label.getName()}"></span>
+        <ul th:replace="node.html :: tree(start=${label})"></ul>
+    </li>
+</ul>

@@ -1,11 +1,13 @@
-<div th:fragment="labels(dayLabels)">
+<div th:fragment="labels(dayLabels)" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="card" th:each="label: ${dayLabels}">
         <div class="card-header" th:id="${label.getName()}">
             <h2 class="mb-0">
                 <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                         th:data-target="'#data-' + ${label.getName()}"
                         aria-expanded="false"
-                        th:aria-controls="'data-' + ${label.getName()}" th:text="${label.getName()}"/>
+                        th:aria-controls="'data-' + ${label.getName()}"
+                        th:text="${label.getName()} + ' (' + ${label.getChoices.size()} +
+                         ' выборов, ' + ${label.getConditions.size()} + ' ветвлений)'"></button>
             </h2>
         </div>
 
@@ -13,12 +15,15 @@
              th:aria-labelledby="${label.getName()}">
             <div class="card-body">
                 <div class="choice" th:each="choice: ${label.getChoices()}">
-                    <div th:text="${choice.getValue()}"/>
+                    <div style="white-space: pre-wrap" th:text="${choice.getValue()}"></div>
                 </div>
                 <div class="condition" th:each="condition: ${label.getConditions()}">
-                    <h3 class="condition-expression" th:text="${condition.getCondition()}"/>
-                    <tr/>
-                    <h6 class="condition-expression" style="white-space: pre-wrap" th:text="${condition.getExpression()}"/>
+                    <h6 class="if-expression" th:text="${condition.getIfCondition()}"></h6>
+                    <p class="if-expression" style="white-space: pre-wrap"
+                       th:text="${condition.getIfBody()}"></p>
+                    <h6 class="else-expression" th:text="${condition.getElseCondition()}"></h6>
+                    <p class="else-expression" style="white-space: pre-wrap"
+                       th:text="${condition.getElseBody()}"></p>
                 </div>
             </div>
         </div>
