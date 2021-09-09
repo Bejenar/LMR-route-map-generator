@@ -12,4 +12,6 @@ public class Day {
     private List<Label> labels;
 
     private String value;
+
+    private String name;
 }
