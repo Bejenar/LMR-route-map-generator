@@ -29,6 +29,9 @@ public class RouteBuilderService {
     @Value("${lmr.days}")
     private List<String> files;
 
+    private final int LEFT_SIZE = 10;
+    private final int TOP_SIZE = 5;
+
     public Collection<Label> traceRoute() {
         Map<String, Label> labels = new LinkedHashMap<>();
 
@@ -53,6 +56,23 @@ public class RouteBuilderService {
             if (curr.getNext().size() == 0 && iterator.hasNext()) {
                 curr.getNext().add(iterator.next());
             }
+        }
+
+        iterator = labels.values().iterator();
+        while (iterator.hasNext()) {
+            Label curr = iterator.next();
+            AtomicInteger count = new AtomicInteger(0);
+            if (curr.getLeft() == null) {
+                curr.setLeft(LEFT_SIZE);
+                curr.setTop(TOP_SIZE);
+            }
+            curr.getNext().stream()
+                .forEach(l -> {
+                    l.setLeft(curr.getLeft() + count.getAndIncrement() * LEFT_SIZE);
+                    l.setTop(curr.getTop() + TOP_SIZE);
+                });
+
+            curr.setNeighbors(curr.getNext().stream().map(Label::getName).collect(Collectors.joining(",")));
         }
 
         return labels.values();
