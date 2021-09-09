@@ -24,4 +24,10 @@ public class RoutemapController {
         model.addAttribute("start",routeBuilderService.traceRoute().stream().findFirst().get());
         return "index";
     }
+    
+    @GetMapping("/graph")
+    public String graph(Model model) {
+        model.addAttribute("labels",routeBuilderService.traceRoute());
+        return "graph";
+    }
 }

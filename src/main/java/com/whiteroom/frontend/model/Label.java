@@ -25,6 +25,12 @@ public class Label {
 
     private final List<Label> next = new ArrayList<>();
 
+    private String neighbors;
+
+    private Integer left;
+
+    private Integer top;
+
     @Override
     public String toString() {
         return name;
